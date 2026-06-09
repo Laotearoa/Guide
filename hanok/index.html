@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laotearoa · Hanok The Black</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg:      #0E0E0E;
+  --card:    #181818;
+  --gold:    #C8A96E;
+  --gold-lt: #E2C98A;
+  --border:  rgba(200,169,110,0.18);
+  --dark:    #F0EAD6;
+  --mid:     #C0B090;
+  --soft:    #8A7A5A;
+  --line:    rgba(200,169,110,0.22);
+}
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--mid); font-family:'DM Sans',sans-serif; font-weight:400; overflow-x:hidden; line-height:1.6; }
+
+/* ── TOP BAR ── */
+.topbar {
+  display:flex; align-items:center; justify-content:flex-start;
+  gap:12px; padding:12px 14px;
+  border-bottom:1px solid var(--line);
+  background:var(--bg);
+  position:sticky; top:0; z-index:100;
+}
+.topbar-logo {
+  width:56px; height:56px; border-radius:10px; overflow:hidden; flex-shrink:0;
+  background:#1A1A1A; border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+}
+.topbar-left { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; overflow:hidden; }
+.topbar-main {
+  font-family:'Montserrat',sans-serif;
+  font-size:1.25rem; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--gold);
+  font-weight:600; line-height:1; white-space:nowrap;
+}
+.topbar-addr-row {
+  display:flex; align-items:flex-end; justify-content:space-between; gap:6px; overflow:hidden;
+}
+.topbar-addr { display:flex; flex-direction:column; gap:1px; overflow:hidden; max-width:100%; min-width:0; }
+.topbar-addr-ko {
+  font-family:'DM Mono',monospace;
+  font-size:0.55rem; letter-spacing:0.03em;
+  color:var(--soft); white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.topbar-addr-en {
+  font-family:'DM Mono',monospace;
+  font-size:0.55rem; letter-spacing:-0.03em;
+  color:var(--gold); text-decoration:none;
+  display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;
+}
+.topbar-addr-en:hover { opacity:0.8; }
+.topbar-sub {
+  font-family:'Montserrat',sans-serif;
+  font-size:0.52rem; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--soft);
+  white-space:nowrap; flex-shrink:0;
+  font-weight:400; line-height:1;
+}
+
+/* ── HERO ── */
+.hero {
+  padding:48px 24px 40px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 120% 60% at 50% 0%, rgba(200,169,110,0.07) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-inner { position:relative; max-width:480px; }
+.hero-addr {
+  display:flex; flex-direction:column; gap:5px;
+}
+.hero-addr-ko {
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem; letter-spacing:0.05em;
+  color:var(--soft);
+}
+
+/* ── SECTION ── */
+.section { padding:24px 16px 0; }
+.section-label {
+  font-family:'DM Mono',monospace;
+  font-size:1rem; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--gold);
+  margin-bottom:12px; font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+.section-label::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(to right, var(--line), transparent);
+}
+
+/* ── GUIDE CARDS ── */
+.guide-list { display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:24px; }
+.guide-card {
+  background:var(--card); padding:14px 16px;
+  text-decoration:none; display:flex;
+  align-items:center; gap:14px;
+  transition:background 0.2s;
+  position:relative;
+}
+.guide-card:active { background:#222; }
+.gc-left {
+  width:44px; height:44px; border-radius:10px;
+  background:rgba(200,169,110,0.08);
+  border:1px solid rgba(200,169,110,0.18);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0;
+}
+.gc-body { flex:1; min-width:0; }
+.gc-cat {
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--dark);
+  margin-bottom:3px; font-weight:600;
+}
+.gc-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px; font-weight:600;
+  color:var(--dark); line-height:1.1;
+  margin-bottom:4px;
+}
+.gc-desc {
+  font-size:12.5px; color:var(--soft);
+  line-height:1.55;
+  display:-webkit-box; -webkit-line-clamp:2;
+  -webkit-box-orient:vertical; overflow:hidden;
+}
+.gc-arrow {
+  font-size:18px; color:var(--gold);
+  flex-shrink:0; opacity:0.6;
+}
+
+/* ── INFO CARDS ── */
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:10px; }
+.info-card { background:var(--card); padding:14px 14px; }
+.ic-label {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px; font-weight:600;
+  color:var(--dark); margin-bottom:4px;
+  display:block; letter-spacing:0.01em;
+}
+.ic-value {
+  font-family:'DM Mono',monospace;
+  font-size:15px; font-weight:500;
+  color:var(--gold); letter-spacing:0.08em;
+  line-height:1; margin-bottom:6px;
+}
+.ic-note { font-size:11.5px; color:var(--soft); line-height:1.5; }
+
+/* ── DETAIL ROWS ── */
+.detail-block {
+  background:var(--card); border:1px solid var(--line);
+  margin-bottom:10px; overflow:hidden;
+}
+.detail-head {
+  padding:11px 16px;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:10px;
+  background:rgba(200,169,110,0.05);
+}
+.dh-icon { font-size:15px; }
+.dh-label {
+  font-family:'DM Mono',monospace;
+  font-size:0.6rem; letter-spacing:0.25em;
+  text-transform:uppercase; color:var(--dark);
+  font-weight:600;
+}
+.detail-rows { display:flex; flex-direction:column; }
+.dr {
+  display:flex; gap:10px;
+  padding:9px 16px;
+  border-bottom:1px solid rgba(200,169,110,0.07);
+  align-items:baseline;
+}
+.dr:last-child { border-bottom:none; }
+.dr-key {
+  font-size:11.5px; font-weight:600; color:var(--dark);
+  min-width:100px; flex-shrink:0;
+}
+.dr-val { font-size:12px; color:var(--mid); line-height:1.5; }
+.dr-val strong { color:var(--dark); font-weight:600; }
+
+/* ── RULES ── */
+.rules-list { display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:24px; }
+.rule-item {
+  background:var(--card); padding:13px 16px;
+  display:flex; gap:12px; align-items:flex-start;
+}
+.rule-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.rule-body { flex:1; }
+.rule-title { font-size:13.5px; font-weight:600; color:var(--dark); margin-bottom:2px; }
+.rule-desc { font-size:12px; color:var(--soft); line-height:1.55; }
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid var(--line);
+  padding:24px 16px 36px;
+  text-align:center;
+  background:rgba(200,169,110,0.03);
+}
+.ft-logo {
+  width:48px; height:48px; border-radius:10px; overflow:hidden;
+  margin:0 auto 10px;
+  background:#1A1A1A; border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.ft-name {
+  font-family:'Montserrat',sans-serif;
+  font-size:16px; font-weight:600;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--dark); margin-bottom:4px;
+}
+.ft-addr {
+  font-family:'DM Mono',monospace;
+  font-size:0.52rem; letter-spacing:0.1em;
+  color:var(--soft); line-height:1.9;
+}
+.ft-contact {
+  margin-top:12px;
+  font-size:12px; color:var(--gold);
+  font-weight:500;
+}
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(14px); transition:opacity 0.55s ease,transform 0.55s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── HERO TAG bigger ── */
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,9vw,64px);
+  font-weight:600; color:var(--dark);
+  letter-spacing:0.01em; line-height:1;
+  margin-bottom:4px;
+}
+.hero-subtitle {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,7vw,48px);
+  font-weight:400; font-style:italic;
+  color:var(--gold); letter-spacing:0.01em;
+  line-height:1; margin-bottom:18px;
+}
+
+/* ── ADDRESS LINK ── */
+.hero-addr-en {
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem; letter-spacing:0.1em;
+  color:var(--gold); text-decoration:none;
+  border-bottom:1px solid rgba(200,169,110,0.3);
+  padding-bottom:1px;
+}
+.hero-addr-en:hover { border-bottom-color:var(--gold); }
+
+/* ── WIFI STRIP ── */
+.wifi-strip {
+  background:#111;
+  padding:16px 20px;
+  border-bottom:1px solid rgba(200,169,110,0.2);
+}
+.wifi-inner {
+  display:flex; align-items:center; gap:14px;
+  max-width:480px;
+}
+.wifi-icon { font-size:20px; flex-shrink:0; }
+.wifi-body { flex:1; min-width:0; }
+.wifi-label {
+  font-family:'DM Mono',monospace;
+  font-size:0.52rem; letter-spacing:0.25em;
+  text-transform:uppercase; color:rgba(200,169,110,0.6);
+  margin-bottom:2px;
+}
+.wifi-name {
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem; letter-spacing:0.08em;
+  color:#E0D8C8; font-weight:500;
+}
+.wifi-pw-block { text-align:right; flex-shrink:0; }
+.wifi-pw-label {
+  font-family:'DM Mono',monospace;
+  font-size:0.52rem; letter-spacing:0.2em;
+  text-transform:uppercase; color:rgba(200,169,110,0.6);
+  margin-bottom:2px;
+}
+.wifi-pw {
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem; color:#E0D8C8;
+  font-weight:500; letter-spacing:0.05em;
+}
+
+@media (min-width:600px) {
+  .section { padding:32px 20px 0; }
+  .guide-card { padding:18px 20px; }
+  .gc-title { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">🏯</div>
+  <div class="topbar-left">
+    <div class="topbar-main">Hanok&thinsp;The&thinsp;Black</div>
+    <div class="topbar-addr-row">
+      <div class="topbar-addr">
+        <a class="topbar-addr-en" href="https://maps.google.com/?q=1-42+Gahoe-dong,+Jongno-gu,+Seoul" target="_blank">1-42 Gahoe-dong, Jongno-gu, Seoul ↗</a>
+        <span class="topbar-addr-ko">서울시 종로구 가회동 1-42</span>
+      </div>
+      <div class="topbar-sub">Laotearoa Seoul</div>
+    </div>
+  </div>
+</div>
+
+<!-- WIFI STRIP -->
+<div class="wifi-strip reveal">
+  <div class="wifi-inner">
+    <span class="wifi-icon">📶</span>
+    <div class="wifi-body">
+      <div class="wifi-label">Wi-Fi</div>
+      <div class="wifi-name">LAOTEAROA Hanok the Black</div>
+    </div>
+    <div class="wifi-pw-block">
+      <div class="wifi-pw-label">Password</div>
+      <div class="wifi-pw">weloveyou2!</div>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDES -->
+<div class="section reveal">
+  <div class="section-label">Guides</div>
+  <div class="guide-list">
+
+    <a class="guide-card" href="Self-checkin.html">
+      <div class="gc-left">🔑</div>
+      <div class="gc-body">
+        <div class="gc-cat">Self Check-In</div>
+        <div class="gc-title">Arrival</div>
+        <p class="gc-desc">Digital door lock instructions, step by step. Naver Map recommended.</p>
+      </div>
+      <div class="gc-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="appliances.html">
+      <div class="gc-left">🏠</div>
+      <div class="gc-body">
+        <div class="gc-cat">Appliances</div>
+        <div class="gc-title">In the House</div>
+        <p class="gc-desc">Boiler, A/C, washer-dryer, Nespresso — English &amp; Korean.</p>
+      </div>
+      <div class="gc-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="recycling.html">
+      <div class="gc-left">♻️</div>
+      <div class="gc-body">
+        <div class="gc-cat">Recycling Guide</div>
+        <div class="gc-title">Recycling &amp; Trash</div>
+        <p class="gc-desc">Korea's strict recycling system — general, recyclable, food &amp; paper.</p>
+      </div>
+      <div class="gc-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="checkout.html">
+      <div class="gc-left">🛫</div>
+      <div class="gc-body">
+        <div class="gc-cat">Check-Out</div>
+        <div class="gc-title">Departure</div>
+        <p class="gc-desc">Nothing special needed — just share your expected time.</p>
+      </div>
+      <div class="gc-arrow">›</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ARRIVAL & DEPARTURE -->
+<div class="section reveal">
+  <div class="section-label">Times &amp; Logistics</div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <span class="ic-label">Check-In</span>
+      <div class="ic-value">4 PM</div>
+      <p class="ic-note">Instructions sent via Airbnb ~2 days before arrival.</p>
+    </div>
+    <div class="info-card">
+      <span class="ic-label">Check-Out</span>
+      <div class="ic-value">11 AM</div>
+      <p class="ic-note">Share your expected time to help us coordinate cleaning.</p>
+    </div>
+  </div>
+
+  <div class="detail-block">
+    <div class="detail-head"><span class="dh-icon">🧳</span><span class="dh-label">Early Arrival &amp; Luggage</span></div>
+    <div class="detail-rows">
+      <div class="dr"><div class="dr-key">Luggage drop-off</div><div class="dr-val">From <strong>12:00 PM</strong>, at no charge.</div></div>
+      <div class="dr"><div class="dr-key">Early check-in</div><div class="dr-val">Before 12 PM when possible — <strong>USD 200</strong>.</div></div>
+      <div class="dr"><div class="dr-key">Luggage storage</div><div class="dr-val">After check-out, stored until <strong>3:00 PM</strong>.</div></div>
+      <div class="dr"><div class="dr-key">Late check-out</div><div class="dr-val">If no same-day check-in — <strong>USD 250</strong> (half night).</div></div>
+    </div>
+  </div>
+
+  <div class="detail-block">
+    <div class="detail-head"><span class="dh-icon">✈️</span><span class="dh-label">Airport Transfer</span></div>
+    <div class="detail-rows">
+      <div class="dr"><div class="dr-key">Incheon Airport</div><div class="dr-val"><strong>USD 80</strong> · 120,000 KRW</div></div>
+      <div class="dr"><div class="dr-key">Gimpo Airport</div><div class="dr-val"><strong>USD 60</strong> · 90,000 KRW</div></div>
+      <div class="dr"><div class="dr-key">Vehicle</div><div class="dr-val">6-seater van. Need a child seat? Let us know in advance.</div></div>
+      <div class="dr"><div class="dr-key">To book</div><div class="dr-val">Share your flight number &amp; passenger count via Airbnb.</div></div>
+    </div>
+  </div>
+
+  <div class="detail-block" style="margin-bottom:36px">
+    <div class="detail-head"><span class="dh-icon">🗺️</span><span class="dh-label">Getting Here</span></div>
+    <div class="detail-rows">
+      <div class="dr"><div class="dr-key">Navigation</div><div class="dr-val">Download <strong>Naver Map</strong> — most reliable in Korea.</div></div>
+      <div class="dr"><div class="dr-key">Subway</div><div class="dr-val"><strong>Anguk Station</strong> (Line 3) · ~9–10 min walk.</div></div>
+      <div class="dr"><div class="dr-key">Village Bus</div><div class="dr-val"><strong>종로02</strong> from Anguk Exit 2 → get off near Gahoe-dong 1-42 (1–2 min walk).</div></div>
+      <div class="dr"><div class="dr-key">Convenience</div><div class="dr-val">CU 24H store: turn right at the main road, ~2–3 min on your right.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOUSE RULES -->
+<div class="section reveal">
+  <div class="section-label">House Rules</div>
+  <div class="rules-list" style="margin-bottom:36px">
+    <div class="rule-item">
+      <span class="rule-icon">🚭</span>
+      <div class="rule-body">
+        <div class="rule-title">No Smoking</div>
+        <div class="rule-desc">Strictly prohibited indoors, in bathrooms, and in the courtyard. Minimum <strong>USD 500</strong> penalty.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🔇</span>
+      <div class="rule-body">
+        <div class="rule-title">Quiet Hours · 9 PM – 9 AM</div>
+        <div class="rule-desc">Please keep noise down especially in the courtyard when coming and going.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">👥</span>
+      <div class="rule-body">
+        <div class="rule-title">Registered Guests Only</div>
+        <div class="rule-desc">Only guests in the reservation may stay overnight. Additional visitors must be pre-approved.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🧼</span>
+      <div class="rule-body">
+        <div class="rule-title">Spills &amp; Damage</div>
+        <div class="rule-desc">Please wipe up spills immediately to avoid permanent stains. Let us know if anything was accidentally damaged.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🚽</span>
+      <div class="rule-body">
+        <div class="rule-title">Toilet Use</div>
+        <div class="rule-desc">Flush toilet paper only. Do not flush wet wipes, tissues, or sanitary products. Clogging from improper disposal may result in repair costs.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🔑</span>
+      <div class="rule-body">
+        <div class="rule-title">Door Lock</div>
+        <div class="rule-desc">Before heading out, turn off all lights and close all mosquito nets and doors. Hanok doors may warp — double-check the lock each time.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">⚠️</span>
+      <div class="rule-body">
+        <div class="rule-title">Safety</div>
+        <div class="rule-desc">Fire extinguishers are located throughout the house. Please locate them at check-in. Fire &amp; Ambulance: <strong>119</strong> · Police: <strong>112</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AMENITIES -->
+<div class="section reveal">
+  <div class="section-label">Amenities</div>
+  <div class="rules-list" style="margin-bottom:36px">
+    <div class="rule-item">
+      <span class="rule-icon">☕</span>
+      <div class="rule-body">
+        <div class="rule-title">Nespresso</div>
+        <div class="rule-desc">Complimentary coffee capsules provided for your stay.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🧂</span>
+      <div class="rule-body">
+        <div class="rule-title">Kitchen Basics</div>
+        <div class="rule-desc">Olive oil, salt, and pepper available for your use.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">💧</span>
+      <div class="rule-body">
+        <div class="rule-title">Drinking Water</div>
+        <div class="rule-desc">Filtered drinking water available from the kitchen purifier.</div>
+      </div>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">💁‍♀️</span>
+      <div class="rule-body">
+        <div class="rule-title">Concierge Support</div>
+        <div class="rule-desc">Think of us as your local friends in Seoul — restaurant tips, transport guidance, or anything else. Reach out anytime via Airbnb.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">🏯</div>
+  <div class="ft-name">LAOTEAROA SEOUL</div>
+  <div class="ft-addr">
+    1-42 Gahoe-dong, Jongno-gu, Seoul<br>
+    서울시 종로구 가회동 1-42
+  </div>
+  <div class="ft-contact">Questions? Message us on Airbnb — KJ &amp; Paul</div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
